@@ -1,14 +1,20 @@
 import { Module } from '@nestjs/common';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
-import { UsersController } from './users/users.controller';
-import { UsersService } from './users/users.service';
 import { UsersModule } from './users/users.module';
-import { UsersService } from './users/users.service';
+import { MongooseModule } from '@nestjs/mongoose';
+import * as dotenv from 'dotenv';
 
 @Module({
-  imports: [UsersModule],
-  controllers: [AppController, UsersController],
-  providers: [AppService, UsersService],
+  imports: [
+    UsersModule,
+    MongooseModule.forRoot('mongodb://localhost/livenest'),
+  ],
+  controllers: [AppController],
+  providers: [AppService],
 })
-export class AppModule {}
+export class AppModule {
+  constructor() {
+    dotenv.config();
+  }
+}

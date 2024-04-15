@@ -70,7 +70,7 @@ export class UsersService {
 
   async deleteUser(userId: string) {
     const result = await this.userModel.deleteOne({ _id: userId }).exec();
-    if (result.n === 0) {
+    if (!result) {
       throw new NotFoundException('Could not find user.');
     }
   }
